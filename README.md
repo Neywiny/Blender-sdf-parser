@@ -5,6 +5,7 @@ Output gifs are all 60 fps, however given the size of some they might show up ch
 
 ## Some examples of renders:
 (note that github does not support gifv embeds so links need to be clicked)
+(further, some images were uploaded to https://imgur.com/a/jGWrc, meaning they have a description text at the bottom that seems out of place without context)
 
 [DNA](https://i.imgur.com/xoKUb9z.gifv)
 
