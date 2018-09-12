@@ -11,6 +11,11 @@ Output gifs are all 60 fps, however given the size of some they might show up ch
 [DNA-OpenGL](https://i.imgur.com/eQ5ulC3.gifv)
 (using OpenGL reduces render time from a matter of minutes/frame to frames/second)
 
+[DNA in portrait for phones](https://i.imgur.com/HwVEBKl.gifv)
+(note that due to the size of the image, looking at it on a phone might not yield the smoothest viewing)
+
+[DNA being torn apart by helicase](https://i.imgur.com/IGqObav.gifv)
+
 [Hemoglobin](https://i.imgur.com/xoKUb9z.gifv)
 
 [Glucose](https://i.imgur.com/k9HZccj.gifv)
