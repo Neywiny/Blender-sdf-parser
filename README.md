@@ -17,6 +17,6 @@ Output gifs are all 60 fps, however given the size of some they might show up ch
 
 [DNA being torn apart by helicase](https://i.imgur.com/IGqObav.gifv)
 
-[Hemoglobin](https://i.imgur.com/xoKUb9z.gifv)
+[Hemoglobin](https://i.imgur.com/R4WVHaC.gifv)
 
 [Glucose](https://i.imgur.com/k9HZccj.gifv)
