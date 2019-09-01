@@ -1,1 +1,1 @@
-{'resolution':{'x':540,'y':540},'start':1,'end':240,'rotation':{'x':False,'y':False,'z':True},'file':'weirdsnowflake.sdf'}
+{'resolution':{'x':540,'y':540},'start':1,'end':240,'rotation':{'x':False,'y':False,'z':True},'file':'hemoglobin.sdf'}

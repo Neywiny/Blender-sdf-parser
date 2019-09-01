@@ -1,12 +1,12 @@
 print('-'*50)
 import bpy,math,sys,os,time,mathutils
 from mathutils import Euler
-bpy.ops.wm.console_toggle()
+#bpy.ops.wm.console_toggle()
 path = "C:/Users/Dylan/Documents/Blender Projects/Molecule/"
 settings = eval(open(path+'settings.txt').read())
 atomProps = eval(open(path+'atomPropsTable.txt').read())
-def cylinder_between(x1, y1, z1, x2, y2, z2, r):
 
+def cylinder_between(x1, y1, z1, x2, y2, z2, r):
   dx = x2 - x1
   dy = y2 - y1
   dz = z2 - z1    
@@ -24,6 +24,7 @@ def cylinder_between(x1, y1, z1, x2, y2, z2, r):
   bpy.context.object.rotation_euler[1] = theta 
   bpy.context.object.rotation_euler[2] = phi
   return bpy.context.object
+
 bpy.ops.object.select_all()
 bpy.ops.object.delete()
 #if bpy.data.objects.get("Cube"): bpy.data.objects['Cube'].select = True
@@ -33,10 +34,11 @@ bpy.ops.object.delete()
 if 'Empty' not in bpy.data.objects:
     bpy.ops.object.empty_add(type='PLAIN_AXES', view_align=False)
 empty = bpy.data.objects['Empty']
-##for child in empty.children:
-##    child.select = True
-##    bpy.ops.object.delete()
+for child in empty.children:
+    child.select = True
+    bpy.ops.object.delete()
 print('old objects deleted')
+
 bpy.context.scene.frame_start,bpy.context.scene.frame_end = settings['start'],settings['end']
 bpy.context.scene.frame_set(bpy.context.scene.frame_start)
 empty.rotation_euler = (0.0,0.0,0.0)
@@ -46,10 +48,13 @@ empty.rotation_euler = (6.28318530718 * settings['rotation']['x'],6.28318530718 
 empty.keyframe_insert(data_path="rotation_euler", index=-1)
 for fc in empty.animation_data.action.fcurves:
     fc.extrapolation = 'LINEAR'
+    
 bpy.context.scene.render.filepath = path+"/OutputOpenGL/"
 bpy.context.scene.render.resolution_x,bpy.context.scene.render.resolution_y = settings['resolution']['x'],settings['resolution']['y']
 bpy.context.scene.render.resolution_percentage = 100
+
 doubleSeparation = 0.1
+
 for atom in atomProps.keys():
     mat = (bpy.data.materials.get(atom) or bpy.data.materials.new(atom))
     mat.diffuse_color=(atomProps[atom]['color'][0]/255.0,atomProps[atom]['color'][1]/255.0,atomProps[atom]['color'][2]/255.0)
@@ -58,14 +63,16 @@ bMat = (bpy.data.materials.get('bond') or bpy.data.materials.new('bond'))
 bMat.diffuse_color = (0.5,0.5,0.5)
 data = open(path+settings['file'],'r').read()
 lData = list(data.split("\n"))
+
 def createAtom(aType,location):
-    bpy.ops.mesh.primitive_ico_sphere_add(subdivisions=4,size=atomProps[aType]['size']/100.0,location=location)
+    bpy.ops.mesh.primitive_ico_sphere_add(subdivisions=4t,size=atomProps[aType]['size']/100.0,location=location)
     ob = bpy.context.object
     for polygon in ob.data.polygons:
         polygon.use_smooth = True
     if len(aType): ob.active_material = atomProps[aType]['material']
     ob.parent = empty
     ob.name = str(currAtom)
+    
 def createBond(type,atom1,atom2):
     if type == '1':
         avg = (atom1.location+atom2.location)/2
@@ -92,11 +99,14 @@ def createBond(type,atom1,atom2):
         ob3.parent = empty
         ob3.active_material = bMat
         ob1.select = ob2.select = ob3.select = False
+        
 print('creation start')
 currAtom = 1
 for line in lData:
     if 'V2000' in line:
         V3000 = pdb = False
+        mLine = len(lData)
+        lData = list(filter(lambda x: len(x) > 0, lData))
         break
     elif 'V3000' in line:
         V3000 = True
@@ -107,7 +117,7 @@ if settings['file'].endswith('pdb'):
     pdb = True
 oldPercent = 200
 print('0---------------------25----------------------50----------------------75---------------------100')
-for index,line in enumerate(lData[4:]):
+for index,line in enumerate(lData[4:] if V3000 else lData[3:]):
     if V3000:
         if line == 'M  V30 END BOND':
             break
@@ -118,8 +128,7 @@ for index,line in enumerate(lData[4:]):
                 oldPercent = 0
             createAtom(split[3],tuple(map(float,split[4:7])))
             currAtom += 1
-            print(currAtom)
-            #print("atom",time.time()-t1)
+            print("atom",time.time()-t1)
         elif not '.' in line and (not 'END' in line) and (not 'BEGIN' in line) and (not 'COUNTS' in line):
             t1 = time.time()
             if oldPercent == 200:
@@ -178,5 +187,5 @@ bpy.context.scene.camera = cam
 cam.select = False
 
 #bpy.ops.render.opengl(animation=False, sequencer=False, write_still=True, view_context=True)
-bpy.ops.render.opengl(animation=True, sequencer=False, write_still=True, view_context=True)
-bpy.ops.wm.quit_blender()
+#bpy.ops.render.opengl(animation=True, sequencer=False, write_still=True, view_context=True)
+#bpy.ops.wm.quit_blender()
